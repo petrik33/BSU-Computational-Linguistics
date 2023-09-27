@@ -73,7 +73,7 @@ fn add_word(word: String, dictionary: State<Dictionary>) -> Result<(), String> {
 
 fn main() {
     let file_path = "./dictionary.json";
-    let mut freq_map = match load_dictionary(file_path) {
+    let freq_map = match load_dictionary(file_path) {
         Ok(d) => d,
         Err(_) => HashMap::new(), // Fall back to an empty dictionary if there was an error
     };
