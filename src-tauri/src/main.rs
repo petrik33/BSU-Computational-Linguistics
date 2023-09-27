@@ -12,6 +12,7 @@ fn make_dictionary_from_file(path: &str) -> Result<HashMap<String, u32>, String>
         .map_err(|info| info.to_string())
 }
 
+#[tauri::command]
 fn make_dictionary(text: &str) -> HashMap<String, u32> {
     let mut dictionary: HashMap<String, u32> = HashMap::new();
     let tokens = text.tokenize();
@@ -29,7 +30,10 @@ fn make_dictionary(text: &str) -> HashMap<String, u32> {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![make_dictionary_from_file])
+        .invoke_handler(tauri::generate_handler![
+            make_dictionary_from_file,
+            make_dictionary
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
