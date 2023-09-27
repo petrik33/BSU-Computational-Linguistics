@@ -43,6 +43,34 @@ fn load_state(dictionary : State<Dictionary>) -> Result<(), String> {
     Ok(())
 }
 
+#[tauri::command]
+fn remove_word(word: String, dictionary: State<Dictionary>) -> Result<(), String> {
+    let mut freq_map = dictionary.mtx.lock().unwrap();
+    let count = match freq_map.get(&word.to_lowercase()) {
+        Some(count) => *count,
+        None => return Err(format!("Word '{}' not found in dictionary", word)),
+    };
+    // let confirm = tauri::dialog::ask("Delete word?", &format!("Are you sure you want to delete the word '{}' from the dictionary? It appears {} times in the text.", word, count));
+    // if let Ok(true) = confirm {
+    //     freq_map.remove(&word.to_lowercase());
+    //     save_dictionary(&freq_map, &dictionary.path).map_err(|e| e.to_string())?;
+    // }
+    freq_map.remove(&word.to_lowercase());
+    save_dictionary(&freq_map, &dictionary.path).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
+#[tauri::command]
+fn add_word(word: String, dictionary: State<Dictionary>) -> Result<(), String> {
+    let mut freq_map = dictionary.mtx.lock().unwrap();
+    if freq_map.contains_key(&word.to_lowercase()) {
+        return Err(format!("Word '{}' already exists in dictionary", word));
+    }
+    freq_map.insert(word.to_lowercase(), 0);
+    save_dictionary(&freq_map, &dictionary.path).map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 fn main() {
     let file_path = "./dictionary.json";
     let mut freq_map = match load_dictionary(file_path) {
@@ -58,7 +86,9 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             update_state,
             save_state,
-            load_state
+            load_state,
+            add_word,
+            remove_word
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
