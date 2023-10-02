@@ -6,6 +6,11 @@ export interface Dictionary {
   [key : string] : number
 }
 
+export interface DictionaryEntry {
+  word : string,
+  frequency : number
+}
+
 @Injectable({
   providedIn: 'root'
 })

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TauriCommunicationService, Dictionary } from '../service/tauri-communication.service';
+import { TauriCommunicationService, Dictionary, DictionaryEntry } from '../service/tauri-communication.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,9 +10,22 @@ import { Observable } from 'rxjs';
 export class FrequencyDictionaryComponent {
 
   frequencyDictionary$: Observable<Dictionary>;
+  sortedDictionary : DictionaryEntry[] = []
 
   constructor(private service: TauriCommunicationService) {
     this.frequencyDictionary$ = this.service.frequencyMap$
+    this.frequencyDictionary$.subscribe(
+      (dictionary) => {
+        this.sortedDictionary = Object.keys(dictionary).map(
+          (word) => {
+            return {
+              frequency: dictionary[word],
+              word
+            }
+          }
+        ).sort((entryA, entryB) => entryA.frequency - entryB.frequency)
+      }
+    )
   }
 
 }

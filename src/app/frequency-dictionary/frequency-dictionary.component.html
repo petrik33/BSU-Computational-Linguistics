@@ -1,8 +1,8 @@
 <div *ngIf="frequencyDictionary$ | async as frequencyDictionary">
     <h2>Frequency Dictionary</h2>
     <ul>
-        <li *ngFor="let entry in frequencyDictionary">
-            {{ entry }}: {{ frequencyDictionary[entry] }}
+        <li *ngFor="let entry of sortedDictionary">
+            {{ entry.word }}: {{ entry.frequency }}
         </li>
     </ul>
 </div>
