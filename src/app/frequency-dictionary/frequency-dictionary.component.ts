@@ -23,7 +23,7 @@ export class FrequencyDictionaryComponent {
               word
             }
           }
-        ).sort((entryA, entryB) => entryA.frequency - entryB.frequency)
+        ).sort((entryA, entryB) => entryB.frequency - entryA.frequency)
       }
     )
   }
