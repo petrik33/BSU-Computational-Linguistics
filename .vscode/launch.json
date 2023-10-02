@@ -5,10 +5,15 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "command": "npm start",
-        "name": "Run npm start",
+        "type": "chrome",
         "request": "launch",
-        "type": "node-terminal"
+        "name": "Launch Chrome against localhost",
+        "url": "http://localhost:4200",
+        "webRoot": "${workspaceFolder}",
+        "sourceMaps": true,
+        "sourceMapPathOverrides": {
+          "webpack:///*": "${webRoot}/*"
+        }
       },
       {
         "type": "lldb",
