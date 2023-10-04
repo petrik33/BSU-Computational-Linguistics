@@ -1,5 +1,13 @@
-<div class="container">
-  <h1>Welcome to Tauri + Angular!</h1>
-  <app-frequency-dictionary></app-frequency-dictionary>
-  <app-add-new-text></app-add-new-text>
-</div>
+<mat-grid-list cols="6" rowHeight="4.75%">
+  <mat-grid-tile colspan="6" rowspan="1">App Header</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="18">Left Sidebar</mat-grid-tile>
+  <mat-grid-tile colspan="4" rowspan="18">
+    <app-frequency-dictionary></app-frequency-dictionary>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="18">
+    Right Sidebar
+  </mat-grid-tile>
+  <mat-grid-tile colspan="6" rowspan="1">
+    <app-add-new-text></app-add-new-text>
+  </mat-grid-tile>
+</mat-grid-list>
