@@ -1,2 +1,4 @@
-<h2>Upload New Text</h2>
-<input type="file" (change)="uploadFile($event)" accept=".txt">
+<input type="file" (change)="onFileChanged($event)" accept=".txt" [disabled]="taskInProgress$ | async">
+<button mat-raised-button (click)="uploadFile()" [disabled]="taskInProgress$ | async">
+    Add<span *ngIf="taskInProgress$ | async"><mat-icon><mat-spinner diameter="20"></mat-spinner></mat-icon></span>
+</button>
