@@ -14,6 +14,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent],
@@ -28,7 +30,9 @@ import { MatInputModule } from '@angular/material/input';
     MatProgressSpinnerModule,
     MatIconModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent],

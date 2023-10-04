@@ -11,6 +11,12 @@ export interface DictionaryEntry {
   frequency : number
 }
 
+export enum Language {
+  ENG = "english",
+  RU = "russian",
+  POR = "portuguesse"
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +24,7 @@ export class TauriCommunicationService {
 
   private frequencyMapSubject: BehaviorSubject<Dictionary> = new BehaviorSubject<Dictionary>({});
   private taskInProgressSubject = new BehaviorSubject<boolean>(false);
+  private currentLanguage : Language = Language.ENG
 
   constructor() {}
 
@@ -25,7 +32,7 @@ export class TauriCommunicationService {
     this.taskInProgressSubject.next(true);
     let dict = await invoke<Record<string, number>>('make_dictionary', { text })
     for (let key in dict) {
-      this.addWord(key, dict[key]);
+      this.addWord(key, dict[key], false);
     }
     this.frequencyMapSubject.next(this.frequencyMap);
     this.taskInProgressSubject.next(false);
@@ -33,6 +40,18 @@ export class TauriCommunicationService {
 
   async getCommandProgress(command : string) {
     return await invoke<number>('get_progress', { command });
+  }
+
+  saveData() {
+    localStorage.setItem(this.currentLanguage as string, JSON.stringify(this.frequencyMap));
+  }
+
+  loadData() {
+    const data = localStorage.getItem(this.currentLanguage as string);
+    if (!data) {
+      return
+    }
+    this.frequencyMapSubject.next(JSON.parse(data));
   }
 
   removeWord(word : string) {
@@ -43,14 +62,20 @@ export class TauriCommunicationService {
     }
   }
 
-  addWord(word : string, count : number) {
+  addWord(word : string, count : number, update : boolean) {
     const frequencyMap = this.frequencyMap;
     if (frequencyMap[word]) {
       frequencyMap[word] += count;
     } else {
       frequencyMap[word] = count;
     }
-    this.frequencyMapSubject.next(frequencyMap);
+    if (update) {
+      this.frequencyMapSubject.next(frequencyMap);
+    }
+  }
+
+  clearDictionary() {
+    this.frequencyMapSubject.next({});
   }
 
   get frequencyMap$(): Observable<Dictionary> {

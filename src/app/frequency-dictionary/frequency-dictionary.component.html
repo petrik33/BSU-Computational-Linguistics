@@ -1,8 +1,24 @@
 <div *ngIf="frequencyDictionary$ | async as frequencyDictionary" class="content">
-    <mat-form-field>
-        <mat-label>Search</mat-label>
-        <input matInput type="text" (change)="onSearchWordChange($event)">
-    </mat-form-field>
+    <ng-container class="tools">
+        <mat-form-field>
+            <input matInput type="text" (input)="onActionWordChange($event)">
+        </mat-form-field>
+        <button matIconButton (click)="removeWordFromDictionary()">
+            <mat-icon>remove</mat-icon>
+        </button>
+        <button matIconButton (click)="addWordToDictionary()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button matIconButton (click)="filterDictionary()">
+            <mat-icon>search</mat-icon>
+        </button>
+        <button matIconButton (click)="saveDictionary()">
+            <mat-icon>save</mat-icon>
+        </button>
+        <button matIconButton (click)="clearData()">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </ng-container>
     <table mat-table [dataSource]="tableData" matSort>
         <ng-container matColumnDef="word">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
@@ -16,6 +32,6 @@
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons>
+    <mat-paginator pageSize="7" [pageSizeOptions]="[]" showFirstLastButtons>
     </mat-paginator>
 </div>

@@ -3,7 +3,7 @@
 
 use std::{collections::HashMap, ops::AddAssign, sync::Mutex};
 
-use charabia::Tokenize;
+use charabia::{Tokenize, TokenKind};
 
 struct ProgressState(Mutex<HashMap<String, f64>>);
 
@@ -26,6 +26,10 @@ async fn make_dictionary(
 
     for token in tokens {
         if !token.is_word() {
+            continue;
+        }
+
+        if token.lemma().parse::<f64>().is_ok() {
             continue;
         }
 
