@@ -1,0 +1,5 @@
+<mat-radio-group (change)="onValueChanged($event)">
+  <mat-radio-button class="example-radio-button" *ngFor="let entry of available" [value]="entry">
+    {{entry}}
+  </mat-radio-button>
+</mat-radio-group>

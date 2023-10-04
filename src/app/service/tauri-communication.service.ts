@@ -11,11 +11,9 @@ export interface DictionaryEntry {
   frequency : number
 }
 
-export enum Language {
-  ENG = "english",
-  RU = "russian",
-  POR = "portuguesse"
-}
+export const LANGUAGES = ['english', 'russian', 'portuguesse'] as const
+
+export type Language = typeof LANGUAGES[number]
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +22,7 @@ export class TauriCommunicationService {
 
   private frequencyMapSubject: BehaviorSubject<Dictionary> = new BehaviorSubject<Dictionary>({});
   private taskInProgressSubject = new BehaviorSubject<boolean>(false);
-  private currentLanguage : Language = Language.ENG
+  private currentLanguage : Language = LANGUAGES[0]
 
   constructor() {}
 
@@ -34,12 +32,19 @@ export class TauriCommunicationService {
     for (let key in dict) {
       this.addWord(key, dict[key], false);
     }
+    this.removeWord('constructor');
     this.frequencyMapSubject.next(this.frequencyMap);
     this.taskInProgressSubject.next(false);
   }
 
   async getCommandProgress(command : string) {
     return await invoke<number>('get_progress', { command });
+  }
+
+  changeLanguage(language : Language) {
+    this.saveData();
+    this.currentLanguage = language
+    this.loadData();
   }
 
   saveData() {
@@ -72,6 +77,10 @@ export class TauriCommunicationService {
     if (update) {
       this.frequencyMapSubject.next(frequencyMap);
     }
+  }
+
+  getFrequency(word : string) {
+    return this.frequencyMap[word] ? this.frequencyMap[word] : 0
   }
 
   clearDictionary() {

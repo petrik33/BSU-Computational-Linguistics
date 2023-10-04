@@ -33,13 +33,4 @@ export class AddNewTextComponent {
     const inputElement = event.target as HTMLInputElement;
     this.file = inputElement?.files?.[0];
   }
-
-  // async trackProgress() {
-  //   let interval = setInterval(async () => {
-  //     this.progressBar.value = await this.tauriService.getCommandProgress('make_dictionary') * 100;
-  //     if (this.progressBar.value >= 100) {
-  //       clearInterval(interval);
-  //     }
-  //   }, 100);
-  // }
 }

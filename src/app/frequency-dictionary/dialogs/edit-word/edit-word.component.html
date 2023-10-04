@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Edit Word</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>New Word</mat-label>
+        <input matInput (input)="onChange($event)">
+      </mat-form-field>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Edit</button>
+    </mat-dialog-actions>
+</div>

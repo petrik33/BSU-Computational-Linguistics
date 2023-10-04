@@ -16,9 +16,13 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatRadioModule } from '@angular/material/radio'
+import { ChangeLanguageComponent } from './change-language/change-language.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import { EditWordComponent } from './frequency-dictionary/dialogs/edit-word/edit-word.component';
 
 @NgModule({
-  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent],
+  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -32,7 +36,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent],

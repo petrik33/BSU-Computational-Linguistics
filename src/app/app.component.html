@@ -1,11 +1,13 @@
 <mat-grid-list cols="6" rowHeight="4.75%">
   <mat-grid-tile colspan="6" rowspan="2">Frequency dictionary</mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="16">Left Sidebar</mat-grid-tile>
+  <mat-grid-tile colspan="1" rowspan="16">
+    <app-change-language></app-change-language>
+  </mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="16">
     <app-frequency-dictionary></app-frequency-dictionary>
   </mat-grid-tile>
   <mat-grid-tile colspan="1" rowspan="16">
-    Right Sidebar
+    <app-statistics></app-statistics>
   </mat-grid-tile>
   <mat-grid-tile colspan="6" rowspan="2">
     <app-add-new-text></app-add-new-text>
