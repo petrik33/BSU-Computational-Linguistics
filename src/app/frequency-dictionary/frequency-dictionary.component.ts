@@ -41,4 +41,10 @@ export class FrequencyDictionaryComponent implements AfterViewInit {
     this.tableData.sort = this.tableSort;
   }
 
+  onSearchWordChange(event : Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const search = inputElement.value;
+    this.tableData.filter = search ? search : ""
+  }
+
 }

@@ -1,9 +1,8 @@
-<div *ngIf="frequencyDictionary$ | async as frequencyDictionary">
-    <!-- <ul>
-        <li *ngFor="let entry of visibleDictionary">
-            {{ entry.word }}: {{ entry.frequency }}
-        </li>
-    </ul> -->
+<div *ngIf="frequencyDictionary$ | async as frequencyDictionary" class="content">
+    <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput type="text" (change)="onSearchWordChange($event)">
+    </mat-form-field>
     <table mat-table [dataSource]="tableData" matSort>
         <ng-container matColumnDef="word">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
@@ -17,6 +16,6 @@
         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
         <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[10, 50, 100, 250, 1000]" showFirstLastButtons>
+    <mat-paginator [pageSizeOptions]="[5, 10]" showFirstLastButtons>
     </mat-paginator>
 </div>

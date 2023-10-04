@@ -1,0 +1,12 @@
+.mat-column-word {
+    width: 70%;
+}
+
+.mat-column-frequency {
+    width: 30%;
+}
+
+.content {
+    width: 100%;
+    overflow-y: auto;
+}
