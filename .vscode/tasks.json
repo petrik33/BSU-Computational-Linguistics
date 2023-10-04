@@ -10,9 +10,8 @@
         // ideally you should also configure a `problemMatcher`
         // see https://code.visualstudio.com/docs/editor/tasks#_can-a-background-task-be-used-as-a-prelaunchtask-in-launchjson
         "isBackground": true,
-        "problemMatcher": "$tsc-watch",
         // change this to your `beforeDevCommand`:
-        "command": "npm run start -- --port 1420",
+        "command": "ng serve --port 1420",
       },
       {
         "label": "ui:build",
