@@ -1,4 +1,8 @@
-<input type="file" (change)="onFileChanged($event)" accept=".txt" [disabled]="taskInProgress$ | async">
-<button mat-raised-button (click)="uploadFile()" [disabled]="taskInProgress$ | async">
-    Add<span *ngIf="taskInProgress$ | async"><mat-icon><mat-spinner diameter="20"></mat-spinner></mat-icon></span>
-</button>
+<div>
+    <input type="file" (change)="onFileChanged($event)" accept=".txt" [disabled]="taskInProgress$ | async">
+</div>
+<div>
+    <button mat-raised-button (click)="uploadFile()" [disabled]="taskInProgress$ | async">
+        Add<span *ngIf="taskInProgress$ | async"><mat-icon><mat-spinner diameter="20"></mat-spinner></mat-icon></span>
+    </button>
+</div>

@@ -19,10 +19,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatRadioModule } from '@angular/material/radio'
 import { ChangeLanguageComponent } from './change-language/change-language.component';
 import { StatisticsComponent } from './statistics/statistics.component';
-import { EditWordComponent } from './frequency-dictionary/dialogs/edit-word/edit-word.component';
+import { EditWordComponent } from './edit-word/edit-word.component';
+import { AddWordComponent } from './add-word/add-word.component';
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
-  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent],
+  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent, AddWordComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -33,6 +35,7 @@ import { EditWordComponent } from './frequency-dictionary/dialogs/edit-word/edit
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,

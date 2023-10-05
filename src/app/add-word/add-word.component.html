@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>New Word</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input matInput type="text" pattern="\p{L}+">
+    </mat-form-field>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button color="basic" mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="primary" (click)="onAcceptAdd()">
+            Accept
+        </button>
+    </mat-dialog-actions>
+</div>

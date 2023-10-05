@@ -1,20 +1,12 @@
 <div *ngIf="frequencyDictionary$ | async as frequencyDictionary" class="content">
     <ng-container class="tools">
         <mat-form-field>
-            <input matInput type="text" (input)="onActionWordChange($event)">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" (input)="onFilterChange($event)">
         </mat-form-field>
-        <button matIconButton (click)="removeWordFromDictionary()">
-            <mat-icon>remove</mat-icon>
-        </button>
-        <button matIconButton (click)="addWordToDictionary()">
+        <button matIconButton (click)="onAddNewWord()">
             <mat-icon>add</mat-icon>
-        </button>
-        <button matIconButton (click)="editWord()">
-            <mat-icon>edit</mat-icon>
-        </button>
-        <button matIconButton (click)="filterDictionary()">
-            <mat-icon>search</mat-icon>
-        </button>
+        </button> 
         <button matIconButton (click)="saveDictionary()">
             <mat-icon>save</mat-icon>
         </button>
@@ -32,8 +24,8 @@
             <td mat-cell *matCellDef="let element"> {{element.frequency}} </td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="onRowClick(row)"></mat-row>
     </table>
     <mat-paginator pageSize="7" [pageSizeOptions]="[]" showFirstLastButtons>
     </mat-paginator>

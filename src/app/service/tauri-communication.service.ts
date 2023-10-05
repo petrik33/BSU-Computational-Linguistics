@@ -67,7 +67,7 @@ export class TauriCommunicationService {
     }
   }
 
-  addWord(word : string, count : number, update : boolean) {
+  async addWord(word : string, count : number, update : boolean) {
     const frequencyMap = this.frequencyMap;
     if (frequencyMap[word]) {
       frequencyMap[word] += count;
@@ -77,6 +77,11 @@ export class TauriCommunicationService {
     if (update) {
       this.frequencyMapSubject.next(frequencyMap);
     }
+    return true;
+  }
+
+  async editWord(previous : string, edited : string) {
+    return true;
   }
 
   getFrequency(word : string) {

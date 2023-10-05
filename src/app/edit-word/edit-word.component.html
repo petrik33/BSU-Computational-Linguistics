@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Edit Word</h1>
+<div mat-dialog-content>
+    <ng-container *ngIf="this.isBeingEdited">
+        <mat-form-field>
+            <mat-label>{{this.data.entry.word}}</mat-label>
+            <input matInput type="text" pattern="\p{L}+">
+        </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="!this.isBeingEdited">
+        <h2>"{{this.data.entry.word}}"</h2>
+        <h3>Frequency : {{this.data.entry.frequency}}</h3>
+    </ng-container>
+
+    <mat-dialog-actions align="end">
+        <button mat-raised-button mat-dialog-close>Cancel</button>
+        <ng-container *ngIf="!this.isBeingEdited">
+            <button mat-raised-button color="warn" (click)="removeWordFromDictionary()">
+                Delete
+            </button>
+            <button mat-raised-button color="primary" (click)="startEditting()">
+                Edit
+            </button>
+        </ng-container>
+        <ng-container *ngIf="this.isBeingEdited">
+            <button mat-raised-button color="primary" (click)="finishEditting()">
+                Accept
+            </button>
+        </ng-container>
+    </mat-dialog-actions>
+</div>

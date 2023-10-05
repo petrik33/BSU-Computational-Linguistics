@@ -4,9 +4,10 @@ import { Observable } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { EditWordComponent } from './dialogs/edit-word/edit-word.component';
+import { EditWordComponent } from '../edit-word/edit-word.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
+import { AddWordComponent } from '../add-word/add-word.component';
 
 @Component({
   selector: 'app-frequency-dictionary',
@@ -19,8 +20,6 @@ export class FrequencyDictionaryComponent implements AfterViewInit {
 
   tableData = new MatTableDataSource<DictionaryEntry>();
   columnsToDisplay = ['word', 'frequency'];
-
-  actionWord : string = "";
 
   constructor(private service: TauriCommunicationService, private dialog : MatDialog) {
     this.frequencyDictionary$ = this.service.frequencyMap$
@@ -48,40 +47,21 @@ export class FrequencyDictionaryComponent implements AfterViewInit {
     this.service.loadData();
   }
 
-  onActionWordChange(event : Event) {
+  onFilterChange(event : Event) {
     const inputElement = event.target as HTMLInputElement;
-    this.actionWord = inputElement.value.toLowerCase();
+    this.tableData.filter = inputElement.value.toLowerCase();
   }
 
-  filterDictionary() {
-    this.tableData.filter = this.actionWord
+  onAddNewWord() {
+    this.dialog.open(AddWordComponent);
   }
 
-  addWordToDictionary() {
-    this.service.addWord(this.actionWord, 0, true);
-    this.actionWordInput.value = ""
-  }
-
-  editWord() {
-    const frequency = this.service.getFrequency(this.actionWord);
-    const removed = this.actionWord
-
-    const dialogRef = this.dialog.open(EditWordComponent, {
-      data: {word : removed},
+  onRowClick(row : DictionaryEntry) {
+    this.dialog.open(EditWordComponent, {
+      data: {entry : row},
+      minWidth: 480,
+      minHeight: 270
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.service.addWord(result, frequency, true);
-      this.service.removeWord(removed);
-    });
-
-    this.actionWordInput.value = ""
-  }
-
-  removeWordFromDictionary() {
-    this.service.removeWord(this.actionWord);
-    this.actionWordInput.value = ""
   }
 
   saveDictionary() {
