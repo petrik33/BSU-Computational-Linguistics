@@ -1,15 +1,23 @@
-<mat-grid-list cols="6" rowHeight="4.75%">
-  <mat-grid-tile colspan="6" rowspan="2">Frequency dictionary</mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="16">
-    <app-change-language></app-change-language>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="4" rowspan="16">
-    <app-frequency-dictionary></app-frequency-dictionary>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="1" rowspan="16">
-    <app-statistics></app-statistics>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="6" rowspan="2">
-    <app-add-new-text></app-add-new-text>
-  </mat-grid-tile>
-</mat-grid-list>
+<div class="container-fluid text-center p-4">
+  <div class="row gy-5 gx-5">
+    <div class="col-md-12">
+      <h1>Frequency dictionary</h1>
+    </div>
+
+    <div class="col-md-2">
+      <app-change-language></app-change-language>
+    </div>
+    
+    <div class="col-md-8">
+      <app-frequency-dictionary></app-frequency-dictionary>
+    </div>
+    
+    <div class="col-md-2">
+      <app-statistics></app-statistics>
+    </div>
+
+    <div class="col-md-12">
+      <app-add-new-text></app-add-new-text>
+    </div>
+  </div>
+</div>
