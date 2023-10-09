@@ -3,7 +3,7 @@
 
 use std::{collections::HashMap, ops::AddAssign, sync::Mutex};
 
-use charabia::{Tokenize, TokenKind};
+use charabia::{Tokenize};
 
 struct ProgressState(Mutex<HashMap<String, f64>>);
 
@@ -19,7 +19,6 @@ async fn get_progress(command: &str, state: tauri::State<'_, ProgressState>) -> 
 #[tauri::command]
 async fn make_dictionary(
     text: &str,
-    state: tauri::State<'_, ProgressState>,
 ) -> Result<HashMap<String, u32>, String> {
     let mut dictionary: HashMap<String, u32> = HashMap::new();
     let tokens = text.tokenize();
