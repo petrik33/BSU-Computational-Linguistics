@@ -56,9 +56,9 @@ export class FrequencyDictionaryComponent implements AfterViewInit {
     this.dialog.open(AddWordComponent);
   }
 
-  onRowClick(row : DictionaryEntry) {
+  onWordClick(entry : DictionaryEntry) {
     this.dialog.open(EditWordComponent, {
-      data: {entry : row},
+      data: {entry : entry},
       minWidth: 480,
       minHeight: 270
     });

@@ -6,7 +6,7 @@
         </mat-form-field>
         <button matIconButton (click)="onAddNewWord()">
             <mat-icon>add</mat-icon>
-        </button> 
+        </button>
         <button matIconButton (click)="saveDictionary()">
             <mat-icon>save</mat-icon>
         </button>
@@ -17,15 +17,20 @@
     <table mat-table [dataSource]="tableData" matSort>
         <ng-container matColumnDef="word">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Word</th>
-            <td mat-cell *matCellDef="let element"> {{element.word}} </td>
+            <td mat-cell *matCellDef="let element">
+                {{element.word}}
+            </td>
         </ng-container>
         <ng-container matColumnDef="frequency">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Frequency</th>
-            <td mat-cell *matCellDef="let element"> {{element.frequency}} </td>
+            <td mat-cell *matCellDef="let element">
+                {{element.frequency}}
+            </td>
         </ng-container>
 
-        <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="onRowClick(row)"></mat-row>
+        <mat-header-row *matHeaderRowDef=" columnsToDisplay"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnsToDisplay" (click)="onWordClick(row)">
+        </mat-row>
     </table>
     <mat-paginator pageSize="7" [pageSizeOptions]="[]" showFirstLastButtons>
     </mat-paginator>

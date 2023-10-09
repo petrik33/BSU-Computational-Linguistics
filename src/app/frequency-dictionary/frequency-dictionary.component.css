@@ -1,9 +1,11 @@
 .mat-column-word {
     width: 70%;
+    cursor: pointer;
 }
 
 .mat-column-frequency {
     width: 30%;
+    cursor: pointer;
 }
 
 .content {
