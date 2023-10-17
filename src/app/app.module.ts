@@ -24,6 +24,7 @@ import { AddWordComponent } from './add-word/add-word.component';
 import { MatButtonModule } from "@angular/material/button";
 import { PlotViewComponent } from './plot-view/plot-view.component';
 import { NgChartsModule } from 'ng2-charts';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent, AddWordComponent, PlotViewComponent],
@@ -43,7 +44,8 @@ import { NgChartsModule } from 'ng2-charts';
     MatDialogModule,
     MatSidenavModule,
     MatRadioModule,
-    NgChartsModule
+    NgChartsModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -15,6 +15,11 @@ export const LANGUAGES = ['english', 'russian', 'portuguesse'] as const
 
 export type Language = typeof LANGUAGES[number]
 
+type ZipfLawData = {
+  dataset: Array<[number, number]>,
+  average: number
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,12 +42,11 @@ export class TauriCommunicationService {
     this.taskInProgressSubject.next(false);
   }
 
-  async calculateZipfLaw(): Promise<Array<[number, number]>> {
+  async calculateZipfLaw(): Promise<ZipfLawData> {
     try {
-      const dataset = await invoke<Array<[number, number]>>('calculate_zipf_law', {
+      return await invoke<ZipfLawData>('calculate_zipf_law', {
         frequencyDict: this.frequencyMap
       });
-      return dataset;
     } catch (error) {
       console.error(error);
       throw new Error('Error calculating Zipf\'s Law coefficients.');

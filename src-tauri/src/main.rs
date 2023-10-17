@@ -3,6 +3,8 @@
 
 use std::{collections::HashMap, ops::AddAssign, sync::Mutex};
 
+use serde::Serialize;
+
 struct ProgressState(Mutex<HashMap<String, f64>>);
 
 #[tauri::command]
@@ -42,30 +44,37 @@ async fn make_dictionary(
     Ok(dictionary)
 }
 
+#[derive(Serialize)]
+struct ZipfLawData {
+    dataset: Vec<(u32, f64)>,
+    average: f64
+}
+
 #[tauri::command]
-async fn calculate_zipf_law(frequency_dict: HashMap<String, u32>) -> Result<Vec<(u32, f64)>, String> {
+async fn calculate_zipf_law(frequency_dict: HashMap<String, u32>) -> Result<ZipfLawData, String> {
     let mut dataset: Vec<(u32, f64)> = Vec::new();
-    let mut freqeuncy_vec = frequency_dict
+    let (total, mut frequency_vec) : (u32, Vec<u32>) = frequency_dict
         .into_iter()
-        .collect::<Vec<_>>();
+        .fold((0, Vec::new()), |(sum, mut frequency_vec), num| {
+            frequency_vec.push(num.1);
+            (sum + num.1, frequency_vec)
+        });
 
-    freqeuncy_vec.sort_by(|a, b| a.0.cmp(&b.0));
+    frequency_vec.sort_by(|a, b| b.cmp(a));
 
-    let sorted_frequency: Vec<u32> = freqeuncy_vec
-        .into_iter()
-        .map(|(_, v)| v)
-        .collect();
+    let mut zipf_sum : f64 = 0.0;
 
     // Calculate Zipf's Law coefficients
-    for (rank, frequency) in sorted_frequency.iter().enumerate() {
-        let f = *frequency as f64;
+    for (rank, frequency) in frequency_vec.iter().enumerate() {
+        let f = *frequency as f64 / total as f64;
         let r = (rank + 1) as u32; // Adding 1 because ranks start from 1
-
-        let c = f * r as f64;
-        dataset.push((r, c));
+        dataset.push((r, f));
+        zipf_sum += f * r as f64;
     }
 
-    Ok(dataset)
+    let average_zipf : f64 = zipf_sum / frequency_vec.len() as f64;
+
+    Ok(ZipfLawData { dataset, average: average_zipf })
 }
 
 

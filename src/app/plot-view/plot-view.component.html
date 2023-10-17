@@ -4,12 +4,12 @@
     <mat-spinner diameter="30"></mat-spinner>
   </div>
   <div style="display: block;">
-    <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions"
-      [legend]="lineChartLegend">
+    <canvas baseChart [type]="'line'" [data]="lineChartData" [options]="lineChartOptions" [legend]="lineChartLegend">
     </canvas>
   </div>
+  <p>{{this.output}}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button type="button" mat-raised-button color="primary" (click)="plotData()">Plot</button>
+  <button type="button" mat-raised-button color="primary" (click)="plotZipfLaw()">Plot Zipf Law</button>
   <button type="button" mat-raised-button color="secondary" (click)="onNoClick()">Close</button>
 </mat-dialog-actions>

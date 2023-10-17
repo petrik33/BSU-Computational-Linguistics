@@ -25,8 +25,8 @@ export class AppComponent {
 
   openPlotDialog() {
       const dialogRef = this.dialog.open(PlotViewComponent, {
-        width: '960px',
-        height: '540px',
+        width: '90%',
+        height: '90%',
       });
   }
 }

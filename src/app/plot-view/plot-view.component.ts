@@ -12,6 +12,8 @@ export class PlotViewComponent {
   @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef;
 
   loading: boolean = false;
+  public output: String = "";
+
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     datasets: [
       {
@@ -32,13 +34,15 @@ export class PlotViewComponent {
     private tauriService: TauriCommunicationService // Inject the service here
   ) {}
 
-  async plotData(): Promise<void> {
+  async plotZipfLaw(): Promise<void> {
     try {
       this.loading = true;
-      const plotData = await this.tauriService.calculateZipfLaw();
+      const { dataset, average } = await this.tauriService.calculateZipfLaw();
 
-      const labels = plotData.map(item => item[0].toString());
-      const values = plotData.map(item => item[1]);
+      this.output = `Average Zipf Coefficient is ${average}`
+
+      const labels = dataset.map(item => item[0].toString());
+      const values = dataset.map(item => item[1]);
 
       this.lineChartData = {
         labels: labels,
