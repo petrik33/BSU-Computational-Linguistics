@@ -22,9 +22,11 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { EditWordComponent } from './edit-word/edit-word.component';
 import { AddWordComponent } from './add-word/add-word.component';
 import { MatButtonModule } from "@angular/material/button";
+import { PlotViewComponent } from './plot-view/plot-view.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
-  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent, AddWordComponent],
+  declarations: [AppComponent, FrequencyDictionaryComponent, AddNewTextComponent, ChangeLanguageComponent, StatisticsComponent, EditWordComponent, AddWordComponent, PlotViewComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -40,7 +42,8 @@ import { MatButtonModule } from "@angular/material/button";
     MatInputModule,
     MatDialogModule,
     MatSidenavModule,
-    MatRadioModule
+    MatRadioModule,
+    NgChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

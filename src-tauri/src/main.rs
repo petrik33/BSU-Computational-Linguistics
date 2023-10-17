@@ -42,10 +42,41 @@ async fn make_dictionary(
     Ok(dictionary)
 }
 
+#[tauri::command]
+async fn calculate_zipf_law(frequency_dict: HashMap<String, u32>) -> Result<Vec<(u32, f64)>, String> {
+    let mut dataset: Vec<(u32, f64)> = Vec::new();
+    let mut freqeuncy_vec = frequency_dict
+        .into_iter()
+        .collect::<Vec<_>>();
+
+    freqeuncy_vec.sort_by(|a, b| a.0.cmp(&b.0));
+
+    let sorted_frequency: Vec<u32> = freqeuncy_vec
+        .into_iter()
+        .map(|(_, v)| v)
+        .collect();
+
+    // Calculate Zipf's Law coefficients
+    for (rank, frequency) in sorted_frequency.iter().enumerate() {
+        let f = *frequency as f64;
+        let r = (rank + 1) as u32; // Adding 1 because ranks start from 1
+
+        let c = f * r as f64;
+        dataset.push((r, c));
+    }
+
+    Ok(dataset)
+}
+
+
 fn main() {
     tauri::Builder::default()
         .manage(ProgressState(Mutex::from(HashMap::new())))
-        .invoke_handler(tauri::generate_handler![make_dictionary, get_progress])
+        .invoke_handler(tauri::generate_handler![
+            make_dictionary,
+            get_progress,
+            calculate_zipf_law
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

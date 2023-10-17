@@ -1,5 +1,8 @@
 import { Component } from "@angular/core";
 import { invoke } from "@tauri-apps/api/tauri";
+import { MatDialog } from "@angular/material/dialog";
+import { PlotViewComponent } from "./plot-view/plot-view.component";
+import { TauriCommunicationService } from "./service/tauri-communication.service";
 
 @Component({
   selector: "app-root",
@@ -9,6 +12,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 export class AppComponent {
   greetingMessage = "";
 
+  constructor (private service : TauriCommunicationService, private dialog : MatDialog) {}
+
   greet(event: SubmitEvent, name: string): void {
     event.preventDefault();
 
@@ -16,5 +21,12 @@ export class AppComponent {
     invoke<string>("greet", { name }).then((text) => {
       this.greetingMessage = text;
     });
+  }
+
+  openPlotDialog() {
+      const dialogRef = this.dialog.open(PlotViewComponent, {
+        width: '960px',
+        height: '540px',
+      });
   }
 }

@@ -37,6 +37,18 @@ export class TauriCommunicationService {
     this.taskInProgressSubject.next(false);
   }
 
+  async calculateZipfLaw(): Promise<Array<[number, number]>> {
+    try {
+      const dataset = await invoke<Array<[number, number]>>('calculate_zipf_law', {
+        frequencyDict: this.frequencyMap
+      });
+      return dataset;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error calculating Zipf\'s Law coefficients.');
+    }
+  }
+
   async getCommandProgress(command : string) {
     return await invoke<number>('get_progress', { command });
   }
