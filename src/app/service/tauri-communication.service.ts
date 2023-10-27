@@ -42,9 +42,44 @@ export class TauriCommunicationService {
     this.taskInProgressSubject.next(false);
   }
 
-  async calculateZipfLaw(): Promise<ZipfLawData> {
+  async calculateWordFrequency() {
     try {
-      return await invoke<ZipfLawData>('calculate_zipf_law', {
+      const data = await invoke<ZipfLawData>('calculate_frequency', {
+        frequencyDict: this.frequencyMap
+      });
+      return data.dataset;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error calculating frequency.');
+    }
+  }
+
+  async calculateZipfLaw() {
+    try {
+      const data = await invoke<ZipfLawData>('calculate_zipf_law', {
+        frequencyDict: this.frequencyMap
+      });
+      return data.dataset;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error calculating Zipf\'s Law coefficients.');
+    }
+  }
+
+  async calculateZipfLaw2() {
+    try {
+      return await invoke<[number, number][]>('calculate_zipf_law2', {
+        frequencyDict: this.frequencyMap
+      });
+    } catch (error) {
+      console.error(error);
+      throw new Error('Error calculating Zipf\'s Law coefficients.');
+    }
+  }
+
+  async calculateZipfEmpericLaw() {
+    try {
+      return await invoke<[number, number][]>('calculate_zipf_emperic_law', {
         frequencyDict: this.frequencyMap
       });
     } catch (error) {
@@ -108,15 +143,15 @@ export class TauriCommunicationService {
     this.frequencyMapSubject.next({});
   }
 
+  get frequencyMap(): Dictionary {
+    return this.frequencyMapSubject.getValue();
+  }
+
   get frequencyMap$(): Observable<Dictionary> {
     return this.frequencyMapSubject.asObservable();
   }
 
   get taskInProgress$(): Observable<boolean> {
     return this.taskInProgressSubject.asObservable();
-  }
-
-  private get frequencyMap(): Dictionary {
-    return this.frequencyMapSubject.getValue();
   }
 }

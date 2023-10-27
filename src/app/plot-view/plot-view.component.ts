@@ -12,7 +12,6 @@ export class PlotViewComponent {
   @ViewChild('chartCanvas', { static: true }) chartCanvas!: ElementRef;
 
   loading: boolean = false;
-  public output: String = "";
 
   public lineChartData: ChartConfiguration<'line'>['data'] = {
     datasets: [
@@ -34,12 +33,10 @@ export class PlotViewComponent {
     private tauriService: TauriCommunicationService // Inject the service here
   ) {}
 
-  async plotZipfLaw(): Promise<void> {
+  async plot(cb : () => Promise<[number, number][]>) {
     try {
       this.loading = true;
-      const { dataset, average } = await this.tauriService.calculateZipfLaw();
-
-      this.output = `Average Zipf Coefficient is ${average}`
+      const dataset = await cb();
 
       const labels = dataset.map(item => item[0].toString());
       const values = dataset.map(item => item[1]);
@@ -49,7 +46,6 @@ export class PlotViewComponent {
         datasets: [
           {
             data: values,
-            label: 'Zipf Law Data',
             backgroundColor: 'rgba(75, 192, 192, 0.2)', // Customize the colors if needed
             borderColor: 'rgba(75, 192, 192, 1)', // Customize the colors if needed
             borderWidth: 1,
@@ -64,6 +60,22 @@ export class PlotViewComponent {
     } finally {
       this.loading = false;
     }
+  }
+
+  async plotFrequency(): Promise<void> {
+    this.plot(() => this.tauriService.calculateWordFrequency());
+  }
+
+  async plotZipfLaw(): Promise<void> {
+      this.plot(() => this.tauriService.calculateZipfLaw());
+  }
+
+  async plotZipfLaw2(): Promise<void> {
+    this.plot(() => this.tauriService.calculateZipfLaw2());
+  }
+
+  async plotEmpericLaw() {
+    this.plot(() => this.tauriService.calculateZipfEmpericLaw());
   }
 
   onNoClick(): void {
